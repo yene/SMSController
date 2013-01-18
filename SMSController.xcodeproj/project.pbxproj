@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		104652651311758500299548 /* SMSControllerSoundAlarm.aif in Resources */ = {isa = PBXBuildFile; fileRef = 104652631311758500299548 /* SMSControllerSoundAlarm.aif */; };
 		104652661311758500299548 /* SMSControllerSoundWarning.aif in Resources */ = {isa = PBXBuildFile; fileRef = 104652641311758500299548 /* SMSControllerSoundWarning.aif */; };
-		10647BF31311495700F66853 /* SMSTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 10647BEC1311495700F66853 /* SMSTester.m */; };
 		10647BF41311495700F66853 /* smslib.m in Sources */ = {isa = PBXBuildFile; fileRef = 10647BEE1311495700F66853 /* smslib.m */; };
 		10647BF51311495700F66853 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 10647BF01311495700F66853 /* Controller.m */; };
 		10647C14131149A600F66853 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10647C13131149A600F66853 /* IOKit.framework */; };
@@ -25,8 +24,6 @@
 		104652631311758500299548 /* SMSControllerSoundAlarm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = SMSControllerSoundAlarm.aif; sourceTree = "<group>"; };
 		104652641311758500299548 /* SMSControllerSoundWarning.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = SMSControllerSoundWarning.aif; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		10647BEB1311495700F66853 /* SMSTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSTester.h; sourceTree = "<group>"; };
-		10647BEC1311495700F66853 /* SMSTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSTester.m; sourceTree = "<group>"; };
 		10647BED1311495700F66853 /* smslib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smslib.h; sourceTree = "<group>"; };
 		10647BEE1311495700F66853 /* smslib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = smslib.m; sourceTree = "<group>"; };
 		10647BEF1311495700F66853 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
@@ -98,8 +95,6 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				10647BEB1311495700F66853 /* SMSTester.h */,
-				10647BEC1311495700F66853 /* SMSTester.m */,
 				10647BED1311495700F66853 /* smslib.h */,
 				10647BEE1311495700F66853 /* smslib.m */,
 				10647BEF1311495700F66853 /* Controller.h */,
@@ -204,7 +199,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10647BF31311495700F66853 /* SMSTester.m in Sources */,
 				10647BF41311495700F66853 /* smslib.m in Sources */,
 				10647BF51311495700F66853 /* Controller.m in Sources */,
 				10647CA913114AA800F66853 /* main.m in Sources */,

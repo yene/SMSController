@@ -7,6 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <CoreFoundation/CoreFoundation.h>
+#include <IOKit/IOKitLib.h>
+#import "smslib.h"
 
 @class SMSTester;
 @interface Controller : NSObject {
@@ -22,6 +25,9 @@
 	SMSTester *smsTester;
 	int mode;
 	double resultMotion;
+    NSMutableString *log;
+	sms_acceleration accel;
+
 }
 
 @property()int mode;
@@ -36,5 +42,7 @@
 -(NSString *)logDate;
 -(void)logMovement;
 -(void)motionLog:(NSString *)text;
+- (void)logMessage: (NSString *)theString;
+- (int)test;
 
 @end

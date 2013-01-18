@@ -7,7 +7,6 @@
 //
 
 #import "Controller.h"
-#import "SMSTester.h"
 
 @implementation Controller
 @synthesize mode, resultMotion;
@@ -150,10 +149,9 @@
 // Make a loop to get the SMS data
 -(void)loopData{
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	smsTester = [[[SMSTester alloc] init] autorelease];
 	
 	while (self.mode == 1) {
-        [smsTester test];
+        [self test];
 		[NSThread sleepForTimeInterval:0.1];
 	}
 	
@@ -186,6 +184,77 @@
 	}
 	
 }
+
+- (int)test {
+	int i, length, result;
+	log = [[NSMutableString alloc] init];
+	
+	[log appendString:@"\n========== SMSTest Report ==========\n"];
+    
+	// Start up SMS access
+	result = smsStartup(self, @selector(logMessage:));
+	if (result != SMS_SUCCESS) {
+		// Couldn't start calibration.
+		[log appendString:@"\n========== end ==========\n"];
+        //		printf([log cString]);
+		NSLog(@"%@",log);
+		return result;
+	}
+	
+	// Fetch and display raw data
+	[log appendString:@"\nRaw data:"];
+	length = smsGetBufferLength();
+	char *buffer = malloc(length);
+	smsGetBufferData(buffer);
+	for (i = 0; i < length; i++) {
+		if (i % 16 == 0) {
+			[log appendString:@"\n"];
+		}
+		[log appendString:[NSString stringWithFormat:@"%02.2hhx ", buffer[i]]];
+	}
+	[log appendString:@"\n\n"];
+	
+	// Load calibration
+	[log appendString:@"Loading any saved calibration: "];
+	if (smsLoadCalibration()) {
+		[log appendString:@"success.\n\n"];
+	} else {
+		[log appendString:@"no saved calibration.\n\n"];
+	}
+	
+	// Fetch and display calibration
+	[log appendString:smsGetCalibrationDescription()];
+	
+	// Fetch and display one sample of calibrated acceleration
+	[log appendString:@"\nFetching calibrated data: "];
+	result = smsGetData(&accel);
+	if (result != SMS_SUCCESS) {
+		[log appendString:@"failed.\n"];
+		[log appendString:@"\n========== end ==========\n"];
+        //		printf([log cString]);
+		NSLog(@"%@",log);
+		return result;
+	}
+	[log appendString:@"success.\n"];
+	[log appendString:[NSString stringWithFormat:@"    X axis:%f\n", accel.x]];
+	[log appendString:[NSString stringWithFormat:@"    Y axis:%f\n", accel.y]];
+	[log appendString:[NSString stringWithFormat:@"    Z axis:%f\n", accel.z]];
+	
+	[log appendString:@"\n========== end ==========\n"];
+    //	printf([log cString]);
+	
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%f",accel.x],@"xValue",[NSString stringWithFormat:@"%f",accel.y],@"yValue",[NSString stringWithFormat:@"%f",accel.z],@"zValue",nil];
+	
+	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+	[center postNotificationName:@"setValues" object:nil userInfo:dict];
+	
+	return 0;
+}
+
+- (void)logMessage: (NSString *)theString {
+	[log appendString:theString];
+}
+
 
 // Clean display by pressing 'stop'
 -(void)cleanDisplay{
