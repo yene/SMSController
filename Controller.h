@@ -34,7 +34,7 @@
 @property()double resultMotion;
 
 -(IBAction)pushEnter:(id)sender;
--(void)setFloatValues:(NSNotification *)notification;
+-(void)setFloatValues:(NSDictionary *)dict;
 -(void)loopData;
 -(void)cleanDisplay;
 -(void)securityStuff;

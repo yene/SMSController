@@ -22,11 +22,6 @@
 		self.mode = 0;
 		
 		[self motionLog:@"fail"];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(setFloatValues:)
-													 name:@"setValues"
-												   object:nil];
 	}
 	return self;
 }
@@ -73,12 +68,12 @@
 }
 
 // Set values to interface
--(void)setFloatValues:(NSNotification *)notification{
+-(void)setFloatValues:(NSDictionary *)dict{
 	
 	// Get data
-	double xValue = [[[notification userInfo]objectForKey:@"xValue"]floatValue];
-	double yValue = [[[notification userInfo]objectForKey:@"yValue"]floatValue];
-	double zValue = [[[notification userInfo]objectForKey:@"zValue"]floatValue];
+	double xValue = [[dict objectForKey:@"xValue"] floatValue];
+	double yValue = [[dict objectForKey:@"yValue"] floatValue];
+	double zValue = [[dict objectForKey:@"zValue"] floatValue];
 	
 	// Make them positiv
 	xValue = (xValue - 0.1);
@@ -245,9 +240,8 @@
 	
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%f",accel.x],@"xValue",[NSString stringWithFormat:@"%f",accel.y],@"yValue",[NSString stringWithFormat:@"%f",accel.z],@"zValue",nil];
 	
-	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-	[center postNotificationName:@"setValues" object:nil userInfo:dict];
-	
+    [self performSelectorOnMainThread:@selector(setFloatValues:) withObject:dict waitUntilDone:YES];
+    
 	return 0;
 }
 
