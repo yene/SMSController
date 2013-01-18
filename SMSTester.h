@@ -48,6 +48,10 @@
  *
  */
 
+#include <CoreFoundation/CoreFoundation.h>
+#include <IOKit/IOKitLib.h>
+#import "smslib.h"
+
 @interface SMSTester : NSObject {
 	NSMutableString *log;
 	sms_acceleration accel;

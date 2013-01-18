@@ -48,9 +48,6 @@
  *
  */
 
-#include <CoreFoundation/CoreFoundation.h>
-#include <IOKit/IOKitLib.h>
-#import "smslib.h"
 #import "SMSTester.h"
 
 @implementation SMSTester

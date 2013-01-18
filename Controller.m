@@ -7,6 +7,7 @@
 //
 
 #import "Controller.h"
+#import "SMSTester.h"
 
 @implementation Controller
 @synthesize mode, resultMotion;
@@ -149,7 +150,7 @@
 // Make a loop to get the SMS data
 -(void)loopData{
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	SMSTester *smsTester = [[[SMSTester alloc]init]autorelease];
+	smsTester = [[[SMSTester alloc] init]autorelease];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	
 	while (self.mode == 1) {
