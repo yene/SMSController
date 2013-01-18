@@ -150,11 +150,10 @@
 // Make a loop to get the SMS data
 -(void)loopData{
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	smsTester = [[[SMSTester alloc] init]autorelease];
-	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+	smsTester = [[[SMSTester alloc] init] autorelease];
 	
 	while (self.mode == 1) {
-		[center postNotificationName:@"sendData" object:nil userInfo:nil];
+        [smsTester test];
 		[NSThread sleepForTimeInterval:0.1];
 	}
 	
