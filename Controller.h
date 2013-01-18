@@ -44,5 +44,5 @@
 -(void)motionLog:(NSString *)text;
 - (void)logMessage: (NSString *)theString;
 - (int)test;
-
+- (void)changeDesktopBackground;
 @end

@@ -22,8 +22,39 @@
 		self.mode = 0;
 		
 		[self motionLog:@"fail"];
+        
+       
+        
 	}
 	return self;
+}
+
+- (void)changeDesktopBackground {
+    //@"com.apple.desktop"
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults addSuiteNamed:@"com.apple.desktop"];
+    NSString *wallpaperFolder = [[userDefaults valueForKeyPath:@"Background.0.DSKDesktopPrefPane.UserFolderPaths"] objectAtIndex:0];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *dirContents = [fm contentsOfDirectoryAtPath:wallpaperFolder error:nil];
+    NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.jpg' OR self ENDSWITH '.png'"];
+    NSMutableArray *onlyPictures = [NSMutableArray arrayWithArray:[dirContents filteredArrayUsingPredicate:fltr]];
+    
+    
+    NSURL *oldImage = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
+    
+    // TODO: remove current wallpaper form list
+    NSUInteger indexToRemove = [onlyPictures indexOfObject:[[oldImage path] lastPathComponent]];
+    [onlyPictures removeObjectAtIndex:indexToRemove];
+    
+    int r = arc4random() % [onlyPictures count];
+    NSString *newPicture = [onlyPictures objectAtIndex:r];
+    newPicture = [NSString stringWithFormat:@"%@/%@", wallpaperFolder, newPicture];
+    NSURL *asdf = [NSURL fileURLWithPath:newPicture];
+    
+    NSDictionary *oldSettings = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:[NSScreen mainScreen]];
+    BOOL bla = [[NSWorkspace sharedWorkspace] setDesktopImageURL:asdf forScreen:[NSScreen mainScreen] options:oldSettings error:nil];
+    
+    NSLog(@"bla %i", bla);
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification {
@@ -119,14 +150,15 @@
 			if ([warningSound isPlaying] == YES ||[alarmSound isPlaying] == YES) {
 			}else {
 				[self speekText:@"warning"];
-				[warningSound play];
+				//[warningSound play];
+                [self changeDesktopBackground];
 			}
 		}else if (self.resultMotion >= 3) {
 			//NSLog(@"ALARM");
 			if ([warningSound isPlaying] == YES ||[alarmSound isPlaying] == YES) {
 			}else {
-				[self speekText:@"alarm"];
-				[alarmSound play];
+				//[self speekText:@"alarm"];
+				//[alarmSound play];
 			}
 		}
 		
